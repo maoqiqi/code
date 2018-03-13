@@ -2,3 +2,4 @@
 /pkg
 .idea
 .DS_Store
+/src/app/app.exe
