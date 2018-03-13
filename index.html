@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>验证码测试</title>
+</head>
+<script>
+    function validate(form) {
+        if (form.inputCode.value == "") {
+            alert("请输入验证码")
+            return false;
+        }
+        return true;
+    }
+
+    function reload() {
+        var image = document.getElementById('image');
+        image.src = "/code?codeKey=" + document.getElementById("codeKey").value + "&reload=" + new Date().getTime();
+        document.getElementById("inputCode").value = ""
+        return true;
+    }
+</script>
+<body>
+<form action="/verify" method="post" onsubmit="return validate(this)">
+    <p>输入你在下图中看到的数字:</p>
+    <p><img id="image" src="/code?codeKey={{ .codeKey }}" alt="image" onclick="reload()" border="1px"></p>
+    <input id="codeKey" name="codeKey" value="{{ .codeKey }}" hidden>
+    <input id="inputCode" name="inputCode" placeholder="请输入验证码" style="width: 100px;height: 30px;"/><br><br>
+    <input type="submit" value="提交" style="width: 100px;height: 30px;">
+</form>
+</body>
+</html>
