@@ -125,7 +125,7 @@ NoSQL
 
 ### 2. Redis数据类型
 
-#### - Redis的五大数据类型
+#### * Redis的五大数据类型
 
 String（字符串）
 
@@ -159,15 +159,15 @@ zset 和 set 一样也是string类型元素的集合,且不允许重复的成员
 
 zset的成员是唯一的,但分数(score)却可以重复。
 
-#### - String（字符串）
+#### * String（字符串）
 
-#### - Hash（哈希）
+#### * Hash（哈希）
 
-#### - List（列表）
+#### * List（列表）
 
-#### - Set（集合）
+#### * Set（集合）
 
-#### - zset(sorted set：有序集合)
+#### * zset(sorted set：有序集合)
 
 ### 3. 解析配置文件redis.conf
 
