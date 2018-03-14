@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/go-redis/redis"
-	_ "github.com/go-sql-driver/mysql"
 	"strconv"
 	"time"
 	"math/rand"
