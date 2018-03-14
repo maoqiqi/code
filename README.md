@@ -115,7 +115,7 @@ NoSQL
 
 ## Redis
 
-### 1. Redis入门介绍
+### 一. Redis入门介绍
 
 #### redis入门概述
 
@@ -123,9 +123,9 @@ NoSQL
 
 #### redis启动后杂项基础知识讲解
 
-### 2. Redis数据类型
+### 二. Redis数据类型
 
-#### * Redis的五大数据类型
+#### 1. Redis的五大数据类型
 
 String（字符串）
 
@@ -159,27 +159,27 @@ zset 和 set 一样也是string类型元素的集合,且不允许重复的成员
 
 zset的成员是唯一的,但分数(score)却可以重复。
 
-#### * String（字符串）
+#### 2. String（字符串）
 
-#### * Hash（哈希）
+#### 3. Hash（哈希）
 
-#### * List（列表）
+#### 4. List（列表）
 
-#### * Set（集合）
+#### 5. Set（集合）
 
-#### * zset(sorted set：有序集合)
+#### 6. zset(sorted set：有序集合)
 
-### 3. 解析配置文件redis.conf
+### 三. 解析配置文件redis.conf
 
-### 4. Redis的持久化
+### 四. Redis的持久化
 
-### 5. Redis的事务
+### 五. Redis的事务
 
-### 6. Redis的发布订阅
+### 六. Redis的发布订阅
 
-### 7. Redis的复制(Master/Slave)
+### 七. Redis的复制(Master/Slave)
 
-### 8. Redis的Java客户端Jedis
+### 八. Redis的Java客户端Jedis
 
 ## MemCached
 
