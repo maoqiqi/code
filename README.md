@@ -159,6 +159,9 @@ zset 和 set 一样也是string类型元素的集合,且不允许重复的成员
 
 zset的成员是唯一的,但分数(score)却可以重复。
 
+**注意：**
+[哪里去获得redis常见数据类型操作命令](http://redisdoc.com/)
+
 #### 2. String（字符串）
 
 #### 3. Hash（哈希）
