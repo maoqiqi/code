@@ -163,7 +163,7 @@ zset的成员是唯一的,但分数(score)却可以重复。
 
 #### 2. String（字符串）
 
-> * SET key value [EX seconds] [PX milliseconds] [NX|XX]
+> SET key value [EX seconds] [PX milliseconds] [NX|XX]
 
 将字符串值 value 关联到 key 。
 
@@ -171,17 +171,17 @@ zset的成员是唯一的,但分数(score)却可以重复。
 
 对于某个原本带有生存时间（TTL）的键来说， 当 SET 命令成功在这个键上执行时， 这个键原有的 TTL 将被清除。
 
-> *
+>
 
-> *
+>
 
-> *
+>
 
-> *
+>
 
-> *
+>
 
-> *
+> 
 
 #### 3. Hash（哈希）
 
