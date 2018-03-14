@@ -296,7 +296,23 @@ MSETNX key value [key value ...]
 
 MSETNX 是原子性的，因此它可以用作设置多个不同 key 表示不同字段(field)的唯一性逻辑对象(unique logic object)，所有字段要么全被设置，要么全不被设置。
 
+> GETSET key value
+
+将给定 key 的值设为 value ，并返回 key 的旧值(old value)。
+
+当 key 存在但不是字符串类型时，返回一个错误。
+
 #### 3. Hash（哈希）
+
+> HSET key field value
+
+HSET key field value
+
+将哈希表 key 中的域 field 的值设为 value 。
+
+如果 key 不存在，一个新的哈希表被创建并进行 HSET 操作。
+
+如果域 field 已经存在于哈希表中，旧值将被覆盖。
 
 #### 4. List（列表）
 
