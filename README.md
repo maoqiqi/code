@@ -159,10 +159,29 @@ zset 和 set 一样也是string类型元素的集合,且不允许重复的成员
 
 zset的成员是唯一的,但分数(score)却可以重复。
 
-**注意：**
-[哪里去获得redis常见数据类型操作命令](http://redisdoc.com/)
+**注意：**[哪里去获得redis常见数据类型操作命令](http://redisdoc.com/)
 
 #### 2. String（字符串）
+
+> * SET key value [EX seconds] [PX milliseconds] [NX|XX]
+
+将字符串值 value 关联到 key 。
+
+如果 key 已经持有其他值， SET 就覆写旧值，无视类型。
+
+对于某个原本带有生存时间（TTL）的键来说， 当 SET 命令成功在这个键上执行时， 这个键原有的 TTL 将被清除。
+
+> *
+
+> *
+
+> *
+
+> *
+
+> *
+
+> *
 
 #### 3. Hash（哈希）
 
