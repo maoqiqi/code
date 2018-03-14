@@ -125,6 +125,18 @@ NoSQL
 
 ### 2. Redis数据类型
 
+#### Redis的五大数据类型
+
+#### String（字符串）
+
+#### Hash（哈希）
+
+#### List（列表）
+
+#### Set（集合）
+
+#### zset(sorted set：有序集合)
+
 ### 3. 解析配置文件redis.conf
 
 ### 4. Redis的持久化
