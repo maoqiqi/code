@@ -107,7 +107,35 @@ NoSQL
 
 ## 当下的NoSQL经典应用
 
-## Redis
+## NoSQL数据模型简介
+
+## NoSQL数据库的四大分类
+
+## 在分布式数据库中CAP原理CAP+BASE
+
+## redis
+
+### redis入门介绍
+
+#### redis入门概述
+
+#### redis的安装
+
+#### redis启动后杂项基础知识讲解
+
+### redis数据类型
+
+### 解析配置文件redis.conf
+
+### redis的持久化
+
+### redis的事务
+
+### redis的发布订阅
+
+### redis的复制(Master/Slave)
+
+### redis的Java客户端Jedis
 
 ## MemCached
 
