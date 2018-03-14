@@ -98,3 +98,17 @@ NoSQL
 - 非结构化和不可预知的数据
 - CAP定理
 - 高性能，高可用性和可伸缩性
+
+## 3V+3高
+
+大数据时代的3V：海量Volume，多样Variety，实时Velocity
+
+互联网需求的3高：高并发，高可扩，高性能
+
+## 当下的NoSQL经典应用
+
+## Redis
+
+## MemCached
+
+## MongoDB
