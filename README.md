@@ -101,9 +101,9 @@ NoSQL
 
 ## 3V+3高
 
-大数据时代的3V：海量Volume，多样Variety，实时Velocity
+**大数据时代的3V：海量Volume，多样Variety，实时Velocity**
 
-互联网需求的3高：高并发，高可扩，高性能
+**互联网需求的3高：高并发，高可扩，高性能**
 
 ## 当下的NoSQL经典应用
 
