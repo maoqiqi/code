@@ -127,7 +127,7 @@ NoSQL
 
 #### 1. Redis的五大数据类型
 
-String（字符串）
+* String（字符串）
 
 string 是redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。
 
@@ -135,7 +135,7 @@ string 类型是二进制安全的。意思是redis的string可以包含任何�
 
 string 类型是Redis最基本的数据类型，一个redis中字符串value最多可以是512M。
 
-Hash（哈希）
+* Hash（哈希）
 
 hash 是一个键值对集合。
 
@@ -143,15 +143,15 @@ hash 是一个string类型的field和value的映射表，hash特别适合用于�
 
 类似Java里面的Map<String,Object>。
 
-List（列表）
+* List（列表）
 
 List 是简单的字符串列表，按照插入顺序排序。你可以添加一个元素导列表的头部（左边）或者尾部（右边）。它的底层实际是个链表。
 
-Set（集合）
+* Set（集合）
 
 Set 是string类型的无序集合。它是通过HashTable实现实现的。
 
-zset(sorted set：有序集合)
+* zset(sorted set：有序集合)
 
 zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。
 
