@@ -113,9 +113,9 @@ NoSQL
 
 ## 在分布式数据库中CAP原理CAP+BASE
 
-## redis
+## Redis
 
-### redis入门介绍
+### 1. Redis入门介绍
 
 #### redis入门概述
 
@@ -123,19 +123,19 @@ NoSQL
 
 #### redis启动后杂项基础知识讲解
 
-### redis数据类型
+### 2. Redis数据类型
 
-### 解析配置文件redis.conf
+### 3. 解析配置文件redis.conf
 
-### redis的持久化
+### 4. Redis的持久化
 
-### redis的事务
+### 5. Redis的事务
 
-### redis的发布订阅
+### 6. Redis的发布订阅
 
-### redis的复制(Master/Slave)
+### 7. Redis的复制(Master/Slave)
 
-### redis的Java客户端Jedis
+### 8. Redis的Java客户端Jedis
 
 ## MemCached
 
