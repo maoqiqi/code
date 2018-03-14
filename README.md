@@ -171,17 +171,130 @@ zset的成员是唯一的,但分数(score)却可以重复。
 
 对于某个原本带有生存时间（TTL）的键来说， 当 SET 命令成功在这个键上执行时， 这个键原有的 TTL 将被清除。
 
->
+> GET key
 
->
+返回 key 所关联的字符串值。
 
->
+如果 key 不存在那么返回特殊值 nil 。
 
->
+假如 key 储存的值不是字符串类型，返回一个错误，因为 GET 只能用于处理字符串值。
 
->
+> STRLEN key
 
-> 
+返回 key 所储存的字符串值的长度。
+
+当 key 储存的不是字符串值时，返回一个错误。
+
+> APPEND key value
+
+如果 key 已经存在并且是一个字符串， APPEND 命令将 value 追加到 key 原来的值的末尾。
+
+如果 key 不存在， APPEND 就简单地将给定 key 设为 value ，就像执行 SET key value 一样。
+
+> SETEX key seconds value
+
+将值 value 关联到 key ，并将 key 的生存时间设为 seconds (以秒为单位)。
+
+如果 key 已经存在， SETEX 命令将覆写旧值。
+
+这个命令类似于以下两个命令：
+
+```
+SET key value
+EXPIRE key seconds  # 设置生存时间
+```
+
+不同之处是， SETEX 是一个原子性(atomic)操作，关联值和设置生存时间两个动作会在同一时间内完成，该命令在 Redis 用作缓存时，非常实用。
+
+> SETNX key value
+
+将 key 的值设为 value ，当且仅当 key 不存在。
+
+若给定的 key 已经存在，则 SETNX 不做任何动作。
+
+SETNX 是『SET if Not eXists』(如果不存在，则 SET)的简写。
+
+> GETRANGE key start end
+
+返回 key 中字符串值的子字符串，字符串的截取范围由 start 和 end 两个偏移量决定(包括 start 和 end 在内)。
+
+负数偏移量表示从字符串最后开始计数， -1 表示最后一个字符， -2 表示倒数第二个，以此类推。
+
+GETRANGE 通过保证子字符串的值域(range)不超过实际字符串的值域来处理超出范围的值域请求。
+
+> SETRANGE key offset value
+
+用 value 参数覆写(overwrite)给定 key 所储存的字符串值，从偏移量 offset 开始。
+
+不存在的 key 当作空白字符串处理。
+
+SETRANGE 命令会确保字符串足够长以便将 value 设置在指定的偏移量上，如果给定 key 原来储存的字符串长度比偏移量小(比如字符串只有 5 个字符长，但你设置的 offset 是 10 )，那么原字符和偏移量之间的空白将用零字节(zerobytes, "\x00" )来填充。
+
+注意你能使用的最大偏移量是 2^29-1(536870911) ，因为 Redis 字符串的大小被限制在 512 兆(megabytes)以内。如果你需要使用比这更大的空间，你可以使用多个 key 。
+
+> INCR key
+
+将 key 中储存的数字值增一。
+
+如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCR 操作。
+
+如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+
+本操作的值限制在 64 位(bit)有符号数字表示之内。
+
+> DECR key
+
+将 key 中储存的数字值减一。
+
+如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 DECR 操作。
+
+如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+
+本操作的值限制在 64 位(bit)有符号数字表示之内。
+
+> INCRBY key increment
+
+将 key 所储存的值加上增量 increment 。
+
+如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCRBY 命令。
+
+如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+
+本操作的值限制在 64 位(bit)有符号数字表示之内。
+
+> DECRBY key decrement
+
+将 key 所储存的值减去减量 decrement 。
+
+如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 DECRBY 操作。
+
+如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+
+本操作的值限制在 64 位(bit)有符号数字表示之内。
+
+> MSET key value [key value ...]
+
+同时设置一个或多个 key-value 对。
+
+如果某个给定 key 已经存在，那么 MSET 会用新值覆盖原来的旧值，如果这不是你所希望的效果，请考虑使用 MSETNX 命令：它只会在所有给定 key 都不存在的情况下进行设置操作。
+
+MSET 是一个原子性(atomic)操作，所有给定 key 都会在同一时间内被设置，某些给定 key 被更新而另一些给定 key 没有改变的情况，不可能发生。
+
+> MGET key [key ...]
+
+返回所有(一个或多个)给定 key 的值。
+
+如果给定的 key 里面，有某个 key 不存在，那么这个 key 返回特殊值 nil 。因此，该命令永不失败。
+
+> MSETNX key value [key value ...]
+
+MSETNX key value [key value ...]
+
+同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在。
+
+即使只有一个给定 key 已存在， MSETNX 也会拒绝执行所有给定 key 的设置操作。
+
+MSETNX 是原子性的，因此它可以用作设置多个不同 key 表示不同字段(field)的唯一性逻辑对象(unique logic object)，所有字段要么全被设置，要么全不被设置。
 
 #### 3. Hash（哈希）
 
