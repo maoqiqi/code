@@ -553,7 +553,122 @@ LTRIM log 0 99
 
 #### 5. Set（集合）
 
+> SADD key member [member ...]
+
+将一个或多个 member 元素加入到集合 key 当中，已经存在于集合的 member 元素将被忽略。
+
+假如 key 不存在，则创建一个只包含 member 元素作成员的集合。
+
+当 key 不是集合类型时，返回一个错误。
+
+> SMEMBERS key
+
+返回集合 key 中的所有成员。
+
+不存在的 key 被视为空集合。
+
+> SISMEMBER key member
+
+判断 member 元素是否集合 key 的成员。
+
+> SCARD key
+
+返回集合 key 的基数(集合中元素的数量)。
+
+> SREM key member [member ...]
+
+移除集合 key 中的一个或多个 member 元素，不存在的 member 元素会被忽略。
+
+当 key 不是集合类型，返回一个错误。
+
+> SRANDMEMBER key [count]
+
+如果命令执行时，只提供了 key 参数，那么返回集合中的一个随机元素。
+
+从 Redis 2.6 版本开始， SRANDMEMBER 命令接受可选的 count 参数：
+
+* 如果 count 为正数，且小于集合基数，那么命令返回一个包含 count 个元素的数组，数组中的元素各不相同。如果 count 大于等于集合基数，那么返回整个集合。
+* 如果 count 为负数，那么命令返回一个数组，数组中的元素可能会重复出现多次，而数组的长度为 count 的绝对值。
+
+该操作和 SPOP 相似，但 SPOP 将随机元素从集合中移除并返回，而 SRANDMEMBER 则仅仅返回随机元素，而不对集合进行任何改动。
+
+> SPOP key
+
+移除并返回集合中的一个随机元素。
+
+如果只想获取一个随机元素，但不想该元素从集合中被移除的话，可以使用 SRANDMEMBER 命令。
+
+> SMOVE source destination member
+
+将 member 元素从 source 集合移动到 destination 集合。
+
+SMOVE 是原子性操作。
+
+如果 source 集合不存在或不包含指定的 member 元素，则 SMOVE 命令不执行任何操作，仅返回 0 。否则， member 元素从 source 集合中被移除，并添加到 destination 集合中去。
+
+当 destination 集合已经包含 member 元素时， SMOVE 命令只是简单地将 source 集合中的 member 元素删除。
+
+当 source 或 destination 不是集合类型时，返回一个错误。
+
+> SDIFF key [key ...]
+
+返回一个集合的全部成员，该集合是所有给定集合之间的差集。
+
+不存在的 key 被视为空集。
+
+> SINTER key [key ...]
+
+返回一个集合的全部成员，该集合是所有给定集合的交集。
+
+不存在的 key 被视为空集。
+
+当给定集合当中有一个空集时，结果也为空集(根据集合运算定律)。
+
+> SUNION key [key ...]
+
+返回一个集合的全部成员，该集合是所有给定集合的并集。
+
+不存在的 key 被视为空集。
+
 #### 6. zset（sorted set：有序集合）
+
+> ZADD key score member [[score member] [score member] ...]
+
+将一个或多个 member 元素及其 score 值加入到有序集 key 当中。
+
+如果某个 member 已经是有序集的成员，那么更新这个 member 的 score 值，并通过重新插入这个 member 元素，来保证该 member 在正确的位置上。
+
+score 值可以是整数值或双精度浮点数。
+
+如果 key 不存在，则创建一个空的有序集并执行 ZADD 操作。
+
+当 key 存在但不是有序集类型时，返回一个错误。
+
+对有序集的更多介绍请参见 sorted set 。
+
+> ZRANGE key start stop [WITHSCORES]
+
+返回有序集 key 中，指定区间内的成员。
+
+其中成员的位置按 score 值递增(从小到大)来排序。
+
+具有相同 score 值的成员按字典序(lexicographical order )来排列。
+
+如果你需要成员按 score 值递减(从大到小)来排列，请使用 ZREVRANGE 命令。
+
+下标参数 start 和 stop 都以 0 为底，也就是说，以 0 表示有序集第一个成员，以 1 表示有序集第二个成员，以此类推。
+
+你也可以使用负数下标，以 -1 表示最后一个成员， -2 表示倒数第二个成员，以此类推。
+
+超出范围的下标并不会引起错误。
+
+比如说，当 start 的值比有序集的最大下标还要大，或是 start > stop 时， ZRANGE 命令只是简单地返回一个空列表。
+
+另一方面，假如 stop 参数的值比有序集的最大下标还要大，那么 Redis 将 stop 当作最大下标来处理。
+
+可以通过使用 WITHSCORES 选项，来让成员和它的 score 值一并返回，返回列表以 value1,score1, ..., valueN,scoreN 的格式表示。
+
+客户端库可能会返回一些更复杂的数据类型，比如数组、元组等。
 
 #### 7. Key（键）
 
