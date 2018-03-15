@@ -479,6 +479,78 @@ count 的值可以是以下几种：
 * count < 0 : 从表尾开始向表头搜索，移除与 value 相等的元素，数量为 count 的绝对值。
 * count = 0 : 移除表中所有与 value 相等的值。
 
+> LTRIM key start stop
+
+对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除。
+
+举个例子，执行命令 LTRIM list 0 2 ，表示只保留列表 list 的前三个元素，其余元素全部删除。
+
+下标(index)参数 start 和 stop 都以 0 为底，也就是说，以 0 表示列表的第一个元素，以 1 表示列表的第二个元素，以此类推。
+
+你也可以使用负数下标，以 -1 表示列表的最后一个元素， -2 表示列表的倒数第二个元素，以此类推。
+
+当 key 不是列表类型时，返回一个错误。
+
+LTRIM 命令通常和 LPUSH 命令或 RPUSH 命令配合使用，举个例子：
+
+```
+LPUSH log newest_log
+LTRIM log 0 99
+```
+
+这个例子模拟了一个日志程序，每次将最新日志 newest_log 放到 log 列表中，并且只保留最新的 100 项。注意当这样使用 LTRIM 命令时，时间复杂度是O(1)，因为平均情况下，每次只有一个元素被移除。
+
+**注意LTRIM命令和编程语言区间函数的区别**
+
+假如你有一个包含一百个元素的列表 list ，对该列表执行 LTRIM list 0 10 ，结果是一个包含11个元素的列表，这表明 stop 下标也在 LTRIM 命令的取值范围之内(闭区间)，这和某些语言的区间函数可能不一致，比如Ruby的 Range.new 、 Array#slice 和Python的 range() 函数。
+
+**超出范围的下标**
+
+超出范围的下标值不会引起错误。
+
+如果 start 下标比列表的最大下标 end ( LLEN list 减去 1 )还要大，或者 start > stop ， LTRIM 返回一个空列表(因为 LTRIM 已经将整个列表清空)。
+
+如果 stop 下标比 end 下标还要大，Redis将 stop 的值设置为 end 。
+
+> RPOPLPUSH source destination
+
+命令 RPOPLPUSH 在一个原子时间内，执行以下两个动作：
+
+* 将列表 source 中的最后一个元素(尾元素)弹出，并返回给客户端。
+* 将 source 弹出的元素插入到列表 destination ，作为 destination 列表的的头元素。
+
+举个例子，你有两个列表 source 和 destination ， source 列表有元素 a, b, c ， destination 列表有元素 x, y, z ，执行 RPOPLPUSH source destination 之后， source 列表包含元素 a, b ， destination 列表包含元素 c, x, y, z ，并且元素 c 会被返回给客户端。
+
+如果 source 不存在，值 nil 被返回，并且不执行其他动作。
+
+如果 source 和 destination 相同，则列表中的表尾元素被移动到表头，并返回该元素，可以把这种特殊情况视作列表的旋转(rotation)操作。
+
+> LSET key index value
+
+将列表 key 下标为 index 的元素的值设置为 value 。
+
+当 index 参数超出范围，或对一个空列表( key 不存在)进行 LSET 时，返回一个错误。
+
+> LINSERT key BEFORE|AFTER pivot value
+
+当 pivot 不存在于列表 key 时，不执行任何操作。
+
+当 key 不存在时， key 被视为空列表，不执行任何操作。
+
+如果 key 不是列表类型，返回一个错误。
+
+**性能总结**
+
+它是一个字符串链表，left、right都可以插入添加；
+
+如果键不存在，创建新的链表；
+
+如果键已存在，新增内容；
+
+如果值全移除，对应的键也就消失了。
+
+链表的操作无论是头和尾效率都极高，但假如是对中间元素进行操作，效率就很惨淡了。
+
 #### 5. Set（集合）
 
 #### 6. zset（sorted set：有序集合）
